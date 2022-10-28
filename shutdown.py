@@ -1,10 +1,13 @@
 import socket
 import subprocess
 
+HOST = ''
+PORT = 61432
+
 serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.IPPROTO_TCP)
-serversocket.bind(('localhost', 8089)) # Fix
+serversocket.bind((HOST, PORT)) # Fix
 serversocket.listen(1)
-connection, address = serversocket.accept()
+conn, _ = serversocket.accept()
 
 output = subprocess.run(["shutdown"], capture_output=True)
 
@@ -23,5 +26,5 @@ else:
     <html><body>418</body></html>
     """
 
-connection.send(response.encode())
-connection.close()
+conn.send(response.encode())
+conn.close()
